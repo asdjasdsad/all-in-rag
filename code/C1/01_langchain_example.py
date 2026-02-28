@@ -9,6 +9,8 @@ from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 
+print("API KEY:", os.getenv("AIHUBMIX_API_KEY"))
+
 load_dotenv()
 
 markdown_path = "../../data/C1/markdown/easy-rl-chapter1.md"
