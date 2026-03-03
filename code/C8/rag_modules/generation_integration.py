@@ -7,7 +7,7 @@ import logging
 from typing import List
 
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
-from langchain_community.chat_models.moonshot import MoonshotChat
+from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
@@ -36,15 +36,18 @@ class GenerationIntegrationModule:
         """初始化大语言模型"""
         logger.info(f"正在初始化LLM: {self.model_name}")
 
-        api_key = os.getenv("MOONSHOT_API_KEY")
+        api_key = os.getenv("AIHUBMIX_API_KEY")
         if not api_key:
-            raise ValueError("请设置 MOONSHOT_API_KEY 环境变量")
+            raise ValueError("请设置 AIHUBMIX_API_KEY 环境变量")
 
-        self.llm = MoonshotChat(
+        base_url = os.getenv("AIHUBMIX_BASE_URL", "https://api.aihubmix.com/v1")
+
+        self.llm = ChatOpenAI(
             model=self.model_name,
             temperature=self.temperature,
             max_tokens=self.max_tokens,
-            moonshot_api_key=api_key
+            api_key=api_key,
+            base_url=base_url
         )
         
         logger.info("LLM初始化完成")

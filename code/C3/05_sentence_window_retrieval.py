@@ -1,4 +1,4 @@
-import os
+﻿import os
 from llama_index.core.node_parser import SentenceWindowNodeParser, SentenceSplitter
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, Settings
 from llama_index.llms.deepseek import DeepSeek

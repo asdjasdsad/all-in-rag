@@ -6,8 +6,12 @@ from openai import OpenAI
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 import logging
+import bilibili_api.utils.network as bili_network
 
 logging.basicConfig(level=logging.INFO)
+
+# Avoid proxy/path issues with Brotli-encoded responses.
+bili_network.HEADERS["Accept-Encoding"] = "gzip, deflate"
 
 # 1. 初始化视频数据
 video_urls = [
@@ -73,9 +77,11 @@ metadata_field_info = [
 
 # 4. 初始化LLM客户端
 client = OpenAI(
-    base_url="https://api.deepseek.com",
-    api_key=os.getenv("DEEPSEEK_API_KEY")
+    base_url="https://aihubmix.com/v1",
+    api_key=os.getenv("AIHUBMIX_API_KEY")
 )
+
+
 
 # 5. 获取所有文档用于排序
 all_documents = vectorstore.similarity_search("", k=len(bili)) 
